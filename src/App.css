@@ -1,42 +1,98 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  min-height: 100vh;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.app-shell {
+  width: min(420px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  align-items: center;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.app-shell__brand {
+  align-self: flex-start;
+  font-size: 0.75rem;
+  letter-spacing: 0.5em;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.52);
+}
+
+.app-shell__headline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.app-shell__headline h1 {
+  margin: 0;
+  font-size: clamp(2.6rem, 6vw, 3.4rem);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.app-shell__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  width: 100%;
+}
+
+.app-shell__button {
+  width: 100%;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.85rem 1.25rem;
+  background: rgba(15, 18, 26, 0.65);
+  color: rgba(255, 255, 255, 0.9);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease, background 200ms ease;
+}
+
+.app-shell__button:hover,
+.app-shell__button:focus-visible {
+  border-color: rgba(105, 135, 255, 0.6);
+  background: rgba(30, 36, 60, 0.85);
+  box-shadow: 0 18px 45px rgba(30, 60, 150, 0.25);
+  transform: translateY(-1px);
+}
+
+.app-shell__button:focus-visible {
+  outline: none;
+}
+
+.app-shell__button--primary {
+  background: linear-gradient(135deg, rgba(130, 150, 255, 0.95), rgba(70, 90, 240, 0.88));
+  color: #070912;
+  border-color: transparent;
+  box-shadow: 0 18px 40px rgba(64, 90, 255, 0.35);
+}
+
+.app-shell__button--primary:hover,
+.app-shell__button--primary:focus-visible {
+  background: linear-gradient(135deg, rgba(150, 170, 255, 1), rgba(90, 115, 255, 0.95));
+  border-color: rgba(150, 170, 255, 0.6);
+}
+
+.app-shell__note {
+  margin: 0;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.48);
+}
+
+@media (max-width: 640px) {
+  .app-shell {
+    gap: 2rem;
   }
-  to {
-    transform: rotate(360deg);
+
+  .app-shell__brand {
+    align-self: center;
+    letter-spacing: 0.35em;
   }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }
