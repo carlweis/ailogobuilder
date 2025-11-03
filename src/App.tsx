@@ -1,34 +1,23 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import CodexSplash from './components/CodexSplash'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <CodexSplash>
+      <div className="app-shell">
+        <span className="app-shell__brand">CODEX</span>
+        <div className="app-shell__headline">
+          <h1>Codex</h1>
+          <div className="app-shell__actions">
+            <button className="app-shell__button app-shell__button--primary">
+              Sign in with ChatGPT
+            </button>
+            <button className="app-shell__button">Use API Key</button>
+          </div>
+          <p className="app-shell__note">Cloud tasks disabled with API key</p>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </CodexSplash>
   )
 }
 
