@@ -1,73 +1,87 @@
-# React + TypeScript + Vite
+# AI Logo Builder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+AI Logo Builder is a Vite + React + TypeScript application that helps product teams craft logo concepts with the help of OpenAI. Generate SVG symbols from prompts, iterate quickly, refine typography, preview mockups, and export production-ready assets.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🔮 **AI Symbol Generation** – Describe a concept and receive sanitized SVG symbols via the OpenAI Responses API.
+- ♻️ **Iteration History** – Keep a timeline of every prompt and switch versions instantly.
+- ✍️ **Typography Controls** – Fine‑tune logo and slogan text with fonts, spacing, outlines, and shadows.
+- 🎛️ **Canvas Tools** – Toggle grid/transparent backgrounds, control zoom, and reset with a single click.
+- 📱 **Mockups & Printing** – Preview app icons and app bar mockups and print a clean canvas layout.
+- 📤 **Flexible Export** – Download SVG, PNG (with scaling), and PDF assets without leaving the browser.
+- 🌙 **Theme Ready** – Light/dark mode with persistent preference and accessible shadcn/ui components.
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Prerequisites
 
-## Expanding the ESLint configuration
+- Node.js 18+
+- npm 9+
+- An OpenAI API key with access to the Responses API.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Installation
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+> **Note:** If the npm registry blocks scoped Radix packages you may need to authenticate or use an alternative registry mirror.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Create a `.env` file based on `.env.example`:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+OPENAI_API_KEY=sk-...
+```
+
+### Available Scripts
+
+- `npm run dev` – Start the Vite client.
+- `npm run server:dev` – Start the Express API (requires `OPENAI_API_KEY`).
+- `npm run dev:both` – Run client and server together for local development.
+- `npm run build` – Type-check and build the client bundle.
+- `npm run preview` – Preview the production build locally.
+
+## Project Structure
+
+```
+.
+├── server/               # Express server that proxies OpenAI requests
+├── src/
+│   ├── components/       # UI primitives and feature components
+│   ├── lib/              # Client helpers (OpenAI, export, SVG utilities)
+│   ├── pages/            # Route-level components
+│   ├── store/            # Zustand state management
+│   └── theme/            # Theme provider
+├── public/
+├── .env.example
+└── README.md
+```
+
+## Server Endpoints
+
+- `POST /api/generate-symbol` – Body `{ prompt: string }` ➜ `{ svg: string }`
+- `POST /api/iterate` – Body `{ prompt: string, baseSvg?: string }` ➜ `{ svg: string }`
+
+Both endpoints sanitize model output to remove scripts, event handlers, and enforce a `viewBox="0 0 1024 1024"`.
+
+## Exporting Assets
+
+The export dialog supports three formats:
+
+- **SVG** – Raw vector markup composed with text layers and canvas options.
+- **PNG** – Raster export with configurable scale factor and background color.
+- **PDF** – Vector-friendly PDF generated via jsPDF using the rasterized PNG.
+
+## Tailwind & UI
+
+Tailwind CSS v4 powers styling. shadcn/ui components are colocated under `src/components/ui`. The global theme variables live in `src/app.css` and respect the `dark` class on `<html>`.
+
+## Security & Environment
+
+- Never expose the OpenAI API key to the browser. The Express server reads `process.env.OPENAI_API_KEY`.
+- SVG responses are sanitized on the server before being saved in the client state.
+
+## License
+
+This project is provided for educational purposes. Adapt it for your organization as needed.
